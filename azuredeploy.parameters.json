@@ -10,6 +10,15 @@
       },
       "adminPasswordOrKey": {
         "value": "Nit-SSH-PUB-KEY"
+      },
+      "basics": {
+          "value": "VMname" // TODO: Fill in parameter value
+      },
+      "steps": {
+          "value": "" // TODO: Fill in parameter value
+      },
+      "outputs": {
+          "value": "" // TODO: Fill in parameter value
       }
     }
   }
