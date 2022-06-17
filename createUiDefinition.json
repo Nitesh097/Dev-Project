@@ -19,14 +19,10 @@
       },
       {
         "name": "vmSize",
-        "type": "Microsoft.Compute.SizeSelector",
-        "label": "Virtual machine size",
-        "toolTip": "The size of the virtual machine",
-        "recommendedSizes": [
-          "Standard_B2s"
-        ],
+        "type": "Microsoft.Compute.CredentialsCombo",
+        "label": "object",
+        "toolTip": "object",
         "osPlatform": "Linux",
-        "count": "1",
         "constraints": {
           "required": true
         },
@@ -112,8 +108,8 @@
               "domainNameLabel": "DNS Prefix for the public IP Address, must be globally unique"
             },
             "defaultValue": {
-              "publicIpAddressName": "[toLower(concat(basics('vmName'), '-ip-', take(replace(guid(), '-', ''), 6)))]",
-              "domainNameLabel": "[toLower(concat(basics('vmName'), '-dn-', take(replace(guid(), '-', ''), 6)))]"
+              "publicIpAddressName": "[toLower(concat(base64ToString('vmName'), '-ip-', take(replace(newGuid(), '-', ''), 6)))]",
+              "domainNameLabel": "[toLower(concat(base64ToString('vmName'), '-dn-', take(replace(newGuid(), '-', ''), 6)))]"
             },
             "options": {
               "hideExisting": true,
@@ -128,6 +124,10 @@
         ]
       }
     ],
-    "outputs": {}
-  }
+    "outputs": {
+      "vmName": "[basics('vmName')]",
+      "location": "[location()]",
+     "adminPasswordOrKey": "[if(equals(base64ToString('credentials').authenticationType, 'password'), base64ToString('credentials').password, base64ToString('credentials').sshPublicKey)]"
+      }
+    }
 }

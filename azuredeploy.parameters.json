@@ -5,20 +5,26 @@
       "adminUsername": {
         "value": "GEN-UNIQUE"
       },
+      "vmName":{
+        "value": "NTG-DEV-Nit"
+      },
+      "VmSize":{
+        "value": "Standard_B2s"
+      },
       "dnsNamePrefix": {
         "value": "GEN-UNIQUE"
       },
       "adminPasswordOrKey": {
-        "value": "Nit-SSH-PUB-KEY"
+        "value": "NIT-SSH-PUB-KEY"
       },
       "basics": {
-          "value": "VMname" // TODO: Fill in parameter value
+          "value": "desired value" 
       },
       "steps": {
-          "value": "" // TODO: Fill in parameter value
+          "value": "desired value"
       },
       "outputs": {
-          "value": "" // TODO: Fill in parameter value
-      }
+        "value": "basics"
+       }
     }
   }
