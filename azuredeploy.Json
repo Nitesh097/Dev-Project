@@ -215,5 +215,7 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "vmName": "[basics('vmName')]"    
+    }
 }

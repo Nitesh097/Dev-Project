@@ -20,8 +20,8 @@
       {
         "name": "vmSize",
         "type": "Microsoft.Compute.CredentialsCombo",
-        "label": "object",
-        "toolTip": "object",
+        "label": "Virtual machine size",
+        "toolTip": "The size of the virtual machine",
         "osPlatform": "Linux",
         "constraints": {
           "required": true
