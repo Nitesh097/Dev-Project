@@ -15,8 +15,8 @@
               "toolTip": "User name for the Virtual Machine.",
               "constraints": {
                   "required": false,
-                  "regex": "",
-                  "validationMessage": ""
+                  "regex": "^$|^[a-z][a-z0-9-][a-z0-9]{3,15}$",
+                  "validationMessage": "The Admin UserName must be between 3 and 15 characters long and contain letters, numbers and hyphens only."
               },
               "visible": true
           },
@@ -28,8 +28,8 @@
               "toolTip": "Virtual Machine Name",
               "constraints": {
                   "required": false,
-                  "regex": "",
-                  "validationMessage": ""
+                  "regex": "^$|^[a-z][a-z0-9-][a-z0-9]{3,18}$",
+                  "validationMessage": "The virtual machine Name must be between 3 and 18 characters long and contain letters, numbers and hyphens only."
               },
               "visible": true
           },
@@ -42,8 +42,8 @@
               "constraints": {
                   "required": false,
                   "validations": [
-                      {"message": " ",
-                          "regex": "^$|^[a-z][a-z0-9-]{1,61}[a-z0-9]$"
+                      {"message": "The DNS name should be between 3 and 20 characters",
+                          "regex": "^$|^[a-z][a-z0-9-][a-z0-9]{3,20}$"
                       }
                   ]
               },
@@ -151,7 +151,7 @@
           "dnsNamePrefix": "[basics('dnsNamePrefix')]",
           "VmSize": "[basics('VmSize')]",
           "ubuntuOSVersion": "[basics('ubuntuOSVersion')]",
-          "location": "[basics('location')]",
+          "location": "[location()]",
           "adminPasswordOrKey": "[coalesce(basics('adminPasswordOrKeyauthenticationType').sshPublicKey, basics('adminPasswordOrKeyauthenticationType').password)]",
           "authenticationType": "[basics('adminPasswordOrKeyauthenticationType').authenticationType]",
           "_artifactsLocation": "[basics('_artifactsLocation')]",

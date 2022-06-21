@@ -32,7 +32,7 @@
         },
         "ubuntuOSVersion": {
             "type": "string",
-            "defaultValue": "22_04-lts-gen2",
+            "defaultValue": "ntg_ubuntu_22_04_lts",
             "metadata": {
                 "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
             }
@@ -77,8 +77,8 @@
         }
     },
     "variables": {
-        "imagePublisher": "Canonical",
-        "imageOffer": "UbuntuServer",
+        "imagePublisher": "ntegralinc1586961136942",
+        "imageOffer": "ntg_ubuntu_22_04",
         "nicName": "ntg-dev-nit",
         "addressPrefix": "10.1.0.0/16",
         "subnetName": "Subnet",

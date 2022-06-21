@@ -18,10 +18,22 @@
         "value": "ntgmanagedapps"
       },
       "adminPasswordOrKey": {
-        "value": null
+        "value": ""
       },
       "outputs": {
         "value": "basics"
-       }
+       },
+      "ubuntuOSVersion": {
+          "value": "22_04-lts-gen2"
+      },
+      "authenticationType": {
+          "value": "sshPublicKey"
+      },
+      "_artifactsLocation": {
+          "value": "" 
+      },
+      "_artifactsLocationSasToken": {
+          "value": ""
+      }
     }
 } 
