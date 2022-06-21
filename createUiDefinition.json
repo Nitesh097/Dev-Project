@@ -3,131 +3,159 @@
   "handler": "Microsoft.Azure.CreateUIDef",
   "version": "0.1.2-preview",
   "parameters": {
-    "basics": [
-      {
-        "name": "vmName",
-        "type": "Microsoft.Common.TextBox",
-        "label": "Virtual machine name",
-        "toolTip": "The name of the virtual machine",
-        "defaultValue": "NTG-DEV-Nit",
-        "constraints": {
-          "required": true,
-          "regex": "^[a-z0-9A-Z-]{3,15}$",
-          "validationMessage": "The virtual machine Name must be between 3 and 15 characters long and contain letters, numbers and hyphens only."
-        },
-        "visible": true
-      },
-      {
-        "name": "vmSize",
-        "type": "Microsoft.Compute.CredentialsCombo",
-        "label": "Virtual machine size",
-        "toolTip": "The size of the virtual machine",
-        "osPlatform": "Linux",
-        "constraints": {
-          "required": true
-        },
-        "visible": true
-      },
-      {
-        "name": "adminUsername",
-        "type": "Microsoft.Compute.UserNameTextBox",
-        "label": "Username",
-        "toolTip": "Admin username for the virtual machine",
-        "osPlatform": "Linux",
-        "constraints": {
-          "required": true
-        },
-        "visible": true
-      },
-      {
-        "name": "credentials",
-        "type": "Microsoft.Compute.CredentialsCombo",
-        "label": {
-          "authenticationType": "Authentication type",
-          "password": "Password",
-          "confirmPassword": "Confirm password",
-          "sshPublicKey": "SSH public key"
-        },
-        "toolTip": {
-          "authenticationType": "Type of authentication to use on the virtual machine. SSH Public Key is recommended",
-          "password": "Admin password for the virtual machine",
-          "sshPublicKey": "SSH Public Key for the virtual machine"
-        },
-        "constraints": {
-          "required": true,
-          "customPasswordRegex": "^(?=.*[A-Z])(?=.*[.!@#$%^&*()-_=+])(?=.*[0-9])(?=.*[a-z]).{12,40}$",
-          "customValidationMessage": "Password must be at least 12 characters long, and contain upper case, lower case, number and symbol"
-        },
-        "options": {
-          "hideConfirmation": false,
-          "hidePassword": false
-        },
-        "osPlatform": "Linux",
-        "visible": true
-      },
-      {
-        "name": "secureBoot",
-        "type": "Microsoft.Common.CheckBox",
-        "label": "Secure Boot setting",
-        "toolTip": "The Secure Boot setting of the virtual machine",
-        "constraints": {
-          "required": false
-        },
-        "visible": true
-      },
-      {
-        "name": "vTPM",
-        "type": "Microsoft.Common.CheckBox",
-        "label": "vTPM setting",
-        "toolTip": "The vTPM setting of the virtual machine",
-        "constraints": {
-          "required": false
-        },
-        "visible": true
-      }
-    ],
-    "steps": [
-      {
-        "name": "Networking",
-        "label": "Networking",
-        "subLabel": {
-          "preValidation": "Configure the virtual machine's network settings",
-          "postValidation": "Done"
-        },
-        "bladeTitle": "Networking",
-        "elements": [
+      "resourceTypes": [
+          "microsoft.resources/resourcegroups"
+      ],
+      "basics": [
           {
-            "name": "publicIpAddress",
-            "type": "Microsoft.Network.PublicIpAddressCombo",
-            "label": {
-              "publicIpAddress": "Public IP Address for the virtual machine",
-              "domainNameLabel": "DNS Prefix for the public IP Address"
-            },
-            "toolTip": {
-              "publicIpAddress": "Public IP Address for the virtual machine",
-              "domainNameLabel": "DNS Prefix for the public IP Address, must be globally unique"
-            },
-            "defaultValue": {
-              "publicIpAddressName": "[toLower(concat(base64ToString('vmName'), '-ip-', take(replace(newGuid(), '-', ''), 6)))]",
-              "domainNameLabel": "[toLower(concat(base64ToString('vmName'), '-dn-', take(replace(newGuid(), '-', ''), 6)))]"
-            },
-            "options": {
-              "hideExisting": true,
-              "hideNone": true
-            },
-            "constraints": {
-              "required": {
-                "domainNameLabel": true
-              }
-            }
+              "name": "adminUsername",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Admin Username",
+              "defaultValue": "azureuser",
+              "toolTip": "User name for the Virtual Machine.",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "vmName",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Vm Name",
+              "defaultValue": "NTG-DEV-Nit",
+              "toolTip": "Virtual Machine Name",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "dnsNamePrefix",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Dns Name Prefix",
+              "defaultValue": "NTGManagedapps",
+              "toolTip": "DNS Name for the publicly accessible node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error.",
+              "constraints": {
+                  "required": false,
+                  "validations": [
+                      {"message": " ",
+                          "regex": "^$|^[a-z][a-z0-9-]{1,61}[a-z0-9]$"
+                      }
+                  ]
+              },
+              "visible": true
+          },
+          {
+              "name": "VmSize",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Vm Size",
+              "defaultValue": "Standard_B2s",
+              "toolTip": "The size of the virtual machines used when provisioning",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "ubuntuOSVersion",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Ubuntu OS Version",
+              "defaultValue": "22_04-lts-gen2",
+              "toolTip": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version.",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "location",
+              "type": "Microsoft.Common.TextBox",
+              "label": "Location",
+              "defaultValue": "[[resourceGroup().location]",
+              "toolTip": "Location for all resources.",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "adminPasswordOrKeyauthenticationType",
+              "type": "Microsoft.Compute.CredentialsCombo",
+              "label": {
+                  "authenticationType": "Authentication Type",
+                  "password": "Admin Password Or Key",
+                  "sshPublicKey": "Admin Password Or Key",
+                  "confirmPassword": "Reconfirm Admin Password Or Key"
+              },
+              "toolTip": {
+                  "authenticationType": "Type of authentication to use on the Virtual Machine. SSH key is recommended.",
+                  "password": "Type of authentication to use on the Virtual Machine. SSH key is recommended.",
+                  "sshPublicKey": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+              },
+              "constraints": {
+                  "required": true
+              },
+              "options": {
+                  "hideConfirmation": true,
+                  "hidePassword": false
+              },
+              "osPlatform": "Linux",
+              "visible": true
+          },
+          {
+              "name": "_artifactsLocation",
+              "type": "Microsoft.Common.TextBox",
+              "label": "_artifacts Location",
+              "defaultValue": "[[deployment().properties.templateLink.uri]",
+              "toolTip": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated.",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "visible": true
+          },
+          {
+              "name": "_artifactsLocationSasToken",
+              "type": "Microsoft.Common.PasswordBox",
+              "label": {
+                  "password": "_artifacts Location Sas Token",
+                  "confirmPassword": "Confirm password"
+              },
+              "toolTip": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated.",
+              "constraints": {
+                  "required": false,
+                  "regex": "",
+                  "validationMessage": ""
+              },
+              "options": {
+                  "hideConfirmation": true
+              },
+              "visible": true
           }
-        ]
+      ],
+      "steps": [],
+      "outputs": {
+          "adminUsername": "[basics('adminUsername')]",
+          "vmName": "[basics('vmName')]",
+          "dnsNamePrefix": "[basics('dnsNamePrefix')]",
+          "VmSize": "[basics('VmSize')]",
+          "ubuntuOSVersion": "[basics('ubuntuOSVersion')]",
+          "location": "[basics('location')]",
+          "adminPasswordOrKey": "[coalesce(basics('adminPasswordOrKeyauthenticationType').sshPublicKey, basics('adminPasswordOrKeyauthenticationType').password)]",
+          "authenticationType": "[basics('adminPasswordOrKeyauthenticationType').authenticationType]",
+          "_artifactsLocation": "[basics('_artifactsLocation')]",
+          "_artifactsLocationSasToken": "[basics('_artifactsLocationSasToken')]"
       }
-    ],
-    "outputs": {
-      "vmName": "[basics('vmName')]",
-      "location": "[location()]",
-     "adminPasswordOrKey": "[if(equals(base64ToString('credentials').authenticationType, 'password'), base64ToString('credentials').password, base64ToString('credentials').sshPublicKey)]"
-      }
-    }
+  }
 }
