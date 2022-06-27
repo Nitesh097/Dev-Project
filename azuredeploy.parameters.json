@@ -24,16 +24,13 @@
         "value": "basics"
        },
       "ubuntuOSVersion": {
-          "value": "22_04-lts-gen2"
+          "value": "ntg_ubuntu_22_04_lts"
       },
       "authenticationType": {
           "value": "sshPublicKey"
       },
       "_artifactsLocation": {
-          "value": "" 
-      },
-      "_artifactsLocationSasToken": {
-          "value": ""
+          "value": "https://github.com/Nitesh097/Dev-Project/blob/main/" 
       }
     }
 } 
